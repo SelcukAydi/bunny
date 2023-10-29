@@ -9,6 +9,7 @@ namespace bunny::detail
         kDoNotSerialize = 0,
         kPrimitive,
         kObject,
-        kPointer
+        kPointer,
+        kArray
     };
 }

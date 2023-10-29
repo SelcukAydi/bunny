@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "level_impl.hpp"
+#include "ArrayWrapper.hpp"
 
 namespace bunny::detail
 {
@@ -48,6 +49,18 @@ namespace bunny::detail
         static constexpr void invoke(Paper &paper, Data &data, std::string& key, int id)
         {
             paper.savePrimitiveData(data, key, id);
+        }
+    };
+
+    template <typename T>
+    struct GlobalSave<T, std::integral_constant<SerializationLevel, SerializationLevel::kArray>>
+    {
+        template <typename Paper, typename Data>
+        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
+        {
+            using ActualType = std::remove_all_extents_t<Data>;
+            ArrayWrapper<ActualType> data_array(data, std::extent_v<Data>);
+            paper.saveArrayData(data_array, key, id);
         }
     };
 
