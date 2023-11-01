@@ -59,7 +59,7 @@ namespace bunny::detail
         static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
         {
             using ActualType = std::remove_all_extents_t<Data>;
-            ArrayWrapper<ActualType> data_array(data, std::extent_v<Data>);
+            ArrayWrapper<ActualType> data_array(std::addressof(data[0]), std::extent_v<Data>);
             paper.saveArrayData(data_array, key, id);
         }
     };

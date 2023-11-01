@@ -46,9 +46,9 @@ namespace bunny::detail
     struct GlobalLoad<T, std::integral_constant<SerializationLevel, SerializationLevel::kPrimitive>>
     {
         template <typename Paper, typename Data>
-        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
+        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id, std::size_t index = 0)
         {
-            paper.loadPrimitiveData(data, key, id);
+            paper.loadPrimitiveData(data, key, id, index);
         }
     };
 
@@ -56,10 +56,11 @@ namespace bunny::detail
     struct GlobalLoad<T, std::integral_constant<SerializationLevel, SerializationLevel::kArray>>
     {
         template <typename Paper, typename Data>
-        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
+        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id, std::size_t index = 0)
         {
-            ArrayWrapper<Data> data_array(*data, std::extent_v<Data>);
-            paper.loadArrayData(data_array, key, id);
+            using ActualType = std::remove_all_extents_t<Data>;
+            ArrayWrapper<ActualType> data_array(std::addressof(data[0]), std::extent_v<Data>);
+            paper.loadArrayData(data_array, key, id, index);
         }
     };
 
@@ -67,9 +68,9 @@ namespace bunny::detail
     struct GlobalLoad<T, std::integral_constant<SerializationLevel, SerializationLevel::kObject>>
     {
         template <typename Paper, typename Data>
-        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
+        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id, std::size_t index = 0)
         {
-            paper.loadObjectData(data, key, id);
+            paper.loadObjectData(data, key, id, index);
         }
     };
 
@@ -77,9 +78,9 @@ namespace bunny::detail
     struct GlobalLoad<T, std::integral_constant<SerializationLevel, SerializationLevel::kPointer>>
     {
         template <typename Paper, typename Data>
-        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id)
+        static constexpr void invoke(Paper& paper, Data& data, std::string& key, int id, std::size_t index = 0)
         {
-            paper.loadPointerData(data, key, id);
+            paper.loadPointerData(data, key, id, index);
         }
     };
 }

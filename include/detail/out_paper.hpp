@@ -3,6 +3,7 @@
 #include "out_paper_interface.hpp"
 #include "out_serializer.hpp"
 #include <memory>
+#include <unordered_map>
 
 namespace bunny::detail
 {
@@ -31,6 +32,18 @@ namespace bunny::detail
         }
 
         template <typename T>
+        void saveObjectData(const std::unordered_map<int, T>& obj, std::string key, int id)
+        {
+            // This method will be called from out serializer.
+            //
+            std::cout << "OutPaper::saveObjectData called\n";
+            key.append(".");
+            key.append(std::to_string(id));
+            // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
+            saveUnorderedMapData(obj, key, id);
+        }
+
+        template <typename T>
         void saveObjectData(T& obj, std::string key, int id)
         {
             // This method will be called from out serializer.
@@ -45,15 +58,36 @@ namespace bunny::detail
         void saveArrayData(ArrayWrapper<T>& data, std::string key, int id)
         {
             std::cout << "OutPaper::saveArrayData called\n";
-            // key.append(".");
-            // key.append(std::to_string(id));
+            key.append(".");
+            key.append(std::to_string(id) + "a");
+            m_stream << "\n";
+            m_stream << key << " " << data.count();
 
             auto count = 0;
             T* ptr = data.address();
 
             while (count < data.count())
             {
+                // TODO: We need a meaningfull id for array elements. They must all have same base key
+                // but different composite keys.
+                //
                 GlobalSave<T, typename ImplementationLevel<T>::type>::invoke(*this, *(ptr + count++), key, id);
+            }
+        }
+
+        template<typename U>
+        void saveUnorderedMapData(const std::unordered_map<int, U>& data, std::string key, int id)
+        {
+            std::cout << "OutPaper::saveUnorderedMapData called\n";
+            key.append(".");
+            key.append(std::to_string(id) + "um");
+            m_stream << "\n";
+            m_stream << key << " " << data.size();
+
+            for(auto itr = data.begin(); itr != data.end(); ++itr)
+            {
+                GlobalSave<int, typename ImplementationLevel<int>::type>::invoke(*this, itr->first, key, id);
+                GlobalSave<U, typename ImplementationLevel<U>::type>::invoke(*this, itr->second, key, id);
             }
         }
 
