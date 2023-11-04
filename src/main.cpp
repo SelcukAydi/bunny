@@ -18,8 +18,8 @@ struct SOParams
     {
         std::cout << "SOParams::serialize called\n";
         paper.save(m_lsc_hash, key, 1);
-        paper.save(m_param_name, key, 2222);
-        paper.save(m_arr, key, 5);
+        // paper.save(m_param_name, key, 2222);
+        // paper.save(m_arr, key, 5);
     }
 
     template<typename Paper>
@@ -27,8 +27,8 @@ struct SOParams
     {
         std::cout << "SOParams::deserialize called\n";
         paper.load(m_lsc_hash, key, 1, index);
-        paper.load(m_param_name, key, 2222, index);
-        paper.load(m_arr, key, 5, index);
+        // paper.load(m_param_name, key, 2222, index);
+        // paper.load(m_arr, key, 5, index);
     }
 };
 
@@ -38,25 +38,28 @@ struct StateData
     SOParams m_params{};
     SOParams m_param_list[5];
     std::unordered_map<int, SOParams> m_map;
+    std::unordered_map<int, std::unordered_map<int, int>> m_complex_map;
 
     template<typename Paper>
     void serialize(Paper& paper, std::string key = "")
     {
         std::cout << "StateData::serialize called\n";
-        paper.save(m_id, key, 1);
-        paper.save(m_params, key, 2);
-        paper.save(m_param_list, key, 3);
+        // paper.save(m_id, key, 1);
+        // paper.save(m_params, key, 2);
+        // paper.save(m_param_list, key, 3);
         paper.save(m_map, key, 4);
+        // paper.save(m_complex_map, key, 5);
     }
 
     template<typename Paper>
     void deserialize(Paper& paper, std::string key = "", std::size_t index = 0)
     {
         std::cout << "StateData::derialize called\n";
-        paper.load(m_id, key, 1, index);
-        paper.load(m_params, key, 2, index);
-        paper.load(m_param_list, key, 3, index);
+        // paper.load(m_id, key, 1, index);
+        // paper.load(m_params, key, 2, index);
+        // paper.load(m_param_list, key, 3, index);
         paper.load(m_map, key, 4, index);
+        // paper.load(m_complex_map, key, 5, index);
     }
 };
 
@@ -75,6 +78,10 @@ int main()
     params.m_lsc_hash = 100;
     params.m_param_name = "myrole";
     state_data.m_map.insert({1,params});
+
+    std::unordered_map<int, int> map_data;
+    map_data.insert({99, 90});
+    state_data.m_complex_map.insert({888, map_data});
 
     state_data.m_param_list[4].m_lsc_hash = 139;
     state_data.m_param_list[4].m_param_name = "banner";

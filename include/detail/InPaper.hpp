@@ -72,7 +72,7 @@ namespace bunny::detail
 
             if (input_stream.fail())
             {
-                std::cerr << "Input stream error: Could not load integer data!\n";
+                std::cerr << "Input stream error: Could not load unsigned integer data!\n";
                 return;
             }
         }
@@ -106,7 +106,7 @@ namespace bunny::detail
 
             if (input_stream.fail())
             {
-                std::cerr << "Input stream error: Could not load integer data!\n";
+                std::cerr << "Input stream error: Could not load string data!\n";
                 return;
             }
         }
@@ -162,7 +162,7 @@ namespace bunny::detail
                 int entry_key{};
                 U entry_data{};
                 GlobalLoad<int, typename ImplementationLevel<int>::type>::invoke(*this, entry_key, key, id, (index * size) + i);
-                GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, entry_data, key, id, (index * size) + i);
+                GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, entry_data, key, id, (index * size) + i + 1);
                 data[entry_key] = entry_data;
             }
         }
