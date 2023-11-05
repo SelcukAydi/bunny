@@ -4,6 +4,7 @@
 #include <istream>
 #include <unordered_map>
 #include <vector>
+#include <sstream>
 
 namespace bunny::detail
 {
@@ -161,7 +162,9 @@ namespace bunny::detail
             {
                 int entry_key{};
                 U entry_data{};
-                GlobalLoad<int, typename ImplementationLevel<int>::type>::invoke(*this, entry_key, key, id, (index * size) + i);
+                std::string tmp_key{key};
+                tmp_key.append(".key");
+                GlobalLoad<int, typename ImplementationLevel<int>::type>::invoke(*this, entry_key, tmp_key, id, (index * size) + i);
                 GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, entry_data, key, id, (index * size) + i);
                 data[entry_key] = entry_data;
             }

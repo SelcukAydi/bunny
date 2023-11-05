@@ -28,7 +28,7 @@ namespace bunny::detail
             // Call the global save method.
             //
             std::cout << "OutPaper::save called\n";
-            GlobalSave<T, typename ImplementationLevel<T>::type>::invoke(*this, data, key, id);
+            GlobalSave<T, typename ImplementationLevel<std::remove_reference_t<T>>::type>::invoke(*this, data, key, id);
         }
 
         template <typename T>
@@ -63,15 +63,16 @@ namespace bunny::detail
             m_stream << "\n";
             m_stream << key << " " << data.count();
 
-            auto count = 0;
+            std::size_t count = 0;
             T* ptr = data.address();
+            using ValT = std::remove_all_extents_t<std::remove_const_t<T>>;
 
             while (count < data.count())
             {
                 // TODO: We need a meaningfull id for array elements. They must all have same base key
                 // but different composite keys.
                 //
-                GlobalSave<T, typename ImplementationLevel<T>::type>::invoke(*this, *(ptr + count++), key, id);
+                GlobalSave<T, typename ImplementationLevel<ValT>::type>::invoke(*this, *(ptr + count++), key, id);
             }
         }
 
@@ -86,7 +87,9 @@ namespace bunny::detail
 
             for(auto itr = data.begin(); itr != data.end(); ++itr)
             {
-                GlobalSave<int, typename ImplementationLevel<int>::type>::invoke(*this, itr->first, key, id);
+                std::string tmp_key{key};
+                tmp_key.append(".key");
+                GlobalSave<int, typename ImplementationLevel<int>::type>::invoke(*this, itr->first, tmp_key, id);
                 GlobalSave<U, typename ImplementationLevel<U>::type>::invoke(*this, itr->second, key, id);
             }
         }

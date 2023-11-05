@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(bunny VERSION 3.7.1 LANGUAGES CXX)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+project(bunny-test VERSION 3.7.1 LANGUAGES CXX)
 
 find_package(GTest REQUIRED)
 
@@ -15,8 +11,9 @@ file(GLOB SRC_FILES
      "include/*.hpp"
 )
 
+
 include_directories(include)
 
-add_subdirectory(test)
-
 add_executable(${PROJECT_NAME} ${SRC_FILES})
+target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES} pthread gtest_main)
