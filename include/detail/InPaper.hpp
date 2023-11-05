@@ -41,6 +41,12 @@ namespace bunny::detail
                 return;
             }
 
+            if(index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData int\n";
+                return;
+            }
+
             std::istringstream input_stream{ itr->second[index] };
 
             input_stream.get();
@@ -66,6 +72,13 @@ namespace bunny::detail
                 return;
             }
 
+            if(index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData unsigned int\n";
+                return;
+            }
+
+
             std::istringstream input_stream{ itr->second[index] };
 
             input_stream.get();
@@ -88,6 +101,12 @@ namespace bunny::detail
             if (itr == m_data.end())
             {
                 std::cerr << "Could not find the key: " << key << '\n';
+                return;
+            }
+
+            if(index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData string\n";
                 return;
             }
 
@@ -126,6 +145,12 @@ namespace bunny::detail
                 return;
             }
 
+            if(index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData array data\n";
+                return;
+            }
+
             std::istringstream input_stream{ itr->second[index] };
             input_stream.get();
             std::size_t size;
@@ -150,6 +175,12 @@ namespace bunny::detail
             if (itr == m_data.end())
             {
                 std::cerr << "Could not find the key: " << key << '\n';
+                return;
+            }
+
+            if(index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData map\n";
                 return;
             }
 
