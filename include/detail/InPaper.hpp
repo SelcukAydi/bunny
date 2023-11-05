@@ -162,7 +162,7 @@ namespace bunny::detail
                 int entry_key{};
                 U entry_data{};
                 GlobalLoad<int, typename ImplementationLevel<int>::type>::invoke(*this, entry_key, key, id, (index * size) + i);
-                GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, entry_data, key, id, (index * size) + i + 1);
+                GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, entry_data, key, id, (index * size) + i);
                 data[entry_key] = entry_data;
             }
         }
