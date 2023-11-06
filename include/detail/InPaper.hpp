@@ -211,6 +211,21 @@ namespace bunny::detail
             }
         }
 
+        template <typename U>
+        void loadSharedPtrData(std::shared_ptr<U> &data, std::string key, int id, std::size_t index = 0)
+        {
+            key.append(".");
+            key.append(std::to_string(id));
+            U* obj = new U{};
+            loadObjectData(*obj, key, id, index);
+
+            // TODO: If this object is not available in the
+            // paper then we need to set pointer to nullptr.
+            //
+
+            data.reset(obj);
+        }
+
         template <typename T>
         void loadObjectData(std::unordered_map<int, T> &obj, std::string key, int id, std::size_t index = 0)
         {
@@ -220,6 +235,17 @@ namespace bunny::detail
             key.append(std::to_string(id));
             // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
             loadUnorderedMapData(obj, key, id, index);
+        }
+
+        template <typename T>
+        void loadObjectData(std::shared_ptr<T> &obj, std::string key, int id, std::size_t index = 0)
+        {
+            // This method will be called from out serializer.
+            //
+            key.append(".");
+            key.append(std::to_string(id));
+            // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
+            loadSharedPtrData(obj, key, id, index);
         }
 
         template <typename T>

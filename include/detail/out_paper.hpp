@@ -44,6 +44,18 @@ namespace bunny::detail
         }
 
         template <typename T>
+        void saveObjectData(const std::shared_ptr<T>& ptr, std::string key, int id)
+        {
+            // This method will be called from out serializer.
+            //
+            std::cout << "OutPaper::saveObjectData called\n";
+            key.append(".");
+            key.append(std::to_string(id));
+            // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
+            saveSharedPointerData(ptr, key, id);
+        }
+
+        template <typename T>
         void saveObjectData(T& obj, std::string key, int id)
         {
             // This method will be called from out serializer.
@@ -100,6 +112,21 @@ namespace bunny::detail
                 GlobalSave<int, typename ImplementationLevel<int>::type>::invoke(*this, itr->first, tmp_key, id);
                 GlobalSave<U, typename ImplementationLevel<U>::type>::invoke(*this, itr->second, tmp_val, id);
             }
+        }
+
+        template<typename T>
+        void saveSharedPointerData(const std::shared_ptr<T>& ptr, std::string key, int id)
+        {
+            std::cout << "OutPaper::saveSharedPointerData called\n";
+
+            if(ptr.get() == nullptr)
+            {
+                return;
+            }
+
+            key.append(".");
+            key.append(std::to_string(id));
+            saveObjectData(*ptr, key, id);
         }
 
         template <typename T>
