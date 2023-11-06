@@ -72,7 +72,9 @@ namespace bunny::detail
                 // TODO: We need a meaningfull id for array elements. They must all have same base key
                 // but different composite keys.
                 //
-                GlobalSave<T, typename ImplementationLevel<ValT>::type>::invoke(*this, *(ptr + count++), key, id);
+                std::string tmp_key{key};
+                tmp_key.append(".item.").append(std::to_string(count));
+                GlobalSave<T, typename ImplementationLevel<ValT>::type>::invoke(*this, *(ptr + count++), tmp_key, id);
             }
         }
 
@@ -84,13 +86,19 @@ namespace bunny::detail
             key.append(std::to_string(id) + "um");
             m_stream << "\n";
             m_stream << key << " " << data.size();
+            std::size_t count = 0;
 
             for(auto itr = data.begin(); itr != data.end(); ++itr)
             {
                 std::string tmp_key{key};
-                tmp_key.append(".key");
+                tmp_key.append(".key.").append(std::to_string(count));
+
+                std::string tmp_val{key};
+                tmp_val.append(".val.").append(std::to_string(count));
+                ++count;
+
                 GlobalSave<int, typename ImplementationLevel<int>::type>::invoke(*this, itr->first, tmp_key, id);
-                GlobalSave<U, typename ImplementationLevel<U>::type>::invoke(*this, itr->second, key, id);
+                GlobalSave<U, typename ImplementationLevel<U>::type>::invoke(*this, itr->second, tmp_val, id);
             }
         }
 
