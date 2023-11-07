@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <sstream>
+#include <memory>
 
 namespace bunny::detail
 {
@@ -216,8 +217,30 @@ namespace bunny::detail
         {
             key.append(".");
             key.append(std::to_string(id));
+
+            auto itr = m_data.find(key);
+
+            if (itr == m_data.end())
+            {
+                std::cerr << "Could not find the key: " << key << '\n';
+                return;
+            }
+
+            std::istringstream input_stream{itr->second[index]};
+            input_stream.get();
+
+            std::string is_valid;
+            input_stream >> is_valid;
+
+            if(is_valid == "invalid")
+            {
+                data.reset();
+                return;
+            }
+
             U* obj = new U{};
-            loadObjectData(*obj, key, id, index);
+            // loadObjectData(*obj, key, id, index);
+            GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, *obj, key, id, index);
 
             // TODO: If this object is not available in the
             // paper then we need to set pointer to nullptr.
