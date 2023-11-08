@@ -4,6 +4,7 @@
 #include "out_serializer.hpp"
 #include <memory>
 #include <unordered_map>
+#include <vector>
 
 namespace bunny::detail
 {
@@ -53,6 +54,18 @@ namespace bunny::detail
             key.append(std::to_string(id));
             // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
             saveSharedPointerData(ptr, key, id);
+        }
+
+        template <typename T>
+        void saveObjectData(std::vector<T> data, std::string key, int id)
+        {
+            // This method will be called from out serializer.
+            //
+            std::cout << "OutPaper::saveObjectData called\n";
+            key.append(".");
+            key.append(std::to_string(id));
+            // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
+            saveVectorData(data, key, id);
         }
 
         template <typename T>
@@ -136,6 +149,25 @@ namespace bunny::detail
 
             // saveObjectData(*ptr, key, id);
             GlobalSave<T, typename ImplementationLevel<T>::type>::invoke(*this, *ptr, key, id);
+        }
+
+        template <typename T>
+        void saveVectorData(std::vector<T> &data, std::string key, int id)
+        {
+            std::cout << "OutPaper::saveVectorData called\n";
+            key.append(".");
+            key.append(std::to_string(id));
+            m_stream << "\n";
+            m_stream << key << " " << data.size();
+
+            using ValT = std::remove_all_extents_t<std::remove_const_t<T>>;
+
+            for(std::size_t i = 0; i < data.size(); ++i)
+            {
+                std::string tmp_key{key};
+                tmp_key.append(".item.").append(std::to_string(i));
+                GlobalSave<T, typename ImplementationLevel<ValT>::type>::invoke(*this, data[i], tmp_key, id);
+            }
         }
 
         template <typename T>

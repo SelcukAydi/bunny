@@ -215,6 +215,7 @@ namespace bunny::detail
         template <typename U>
         void loadSharedPtrData(std::shared_ptr<U> &data, std::string key, int id, std::size_t index = 0)
         {
+            index = 0;
             key.append(".");
             key.append(std::to_string(id));
 
@@ -232,13 +233,13 @@ namespace bunny::detail
             std::string is_valid;
             input_stream >> is_valid;
 
-            if(is_valid == "invalid")
+            if (is_valid == "invalid")
             {
                 data.reset();
                 return;
             }
 
-            U* obj = new U{};
+            U *obj = new U{};
             // loadObjectData(*obj, key, id, index);
             GlobalLoad<U, typename ImplementationLevel<U>::type>::invoke(*this, *obj, key, id, index);
 
@@ -247,6 +248,42 @@ namespace bunny::detail
             //
 
             data.reset(obj);
+        }
+
+        template <typename T>
+        void loadVectorData(std::vector<T> &data, std::string key, int id, std::size_t index = 0)
+        {
+            index = 0;
+            key.append(".");
+            key.append(std::to_string(id));
+
+            auto itr = m_data.find(key);
+
+            if (itr == m_data.end())
+            {
+                std::cerr << "Could not find the key: " << key << '\n';
+                return;
+            }
+
+            if (index >= itr->second.size())
+            {
+                std::cerr << "ERROR: loadPrimitiveData array data\n";
+                return;
+            }
+
+            std::istringstream input_stream{itr->second[index]};
+            input_stream.get();
+            std::size_t size;
+            input_stream >> size;
+
+            for (std::size_t i = 0; i < size; ++i)
+            {
+                std::string tmp_key{key};
+                tmp_key.append(".item.").append(std::to_string(i));
+                T obj;
+                GlobalLoad<T, typename ImplementationLevel<T>::type>::invoke(*this, obj, tmp_key, id, (index * size) + i);
+                data.push_back(obj);
+            }
         }
 
         template <typename T>
@@ -269,6 +306,17 @@ namespace bunny::detail
             key.append(std::to_string(id));
             // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
             loadSharedPtrData(obj, key, id, index);
+        }
+
+        template <typename T>
+        void loadObjectData(std::vector<T> &obj, std::string key, int id, std::size_t index = 0)
+        {
+            // This method will be called from out serializer.
+            //
+            key.append(".");
+            key.append(std::to_string(id));
+            // (static_cast<std::remove_const_t<T>>(obj)).serialize(*this, key);
+            loadVectorData(obj, key, id, index);
         }
 
         template <typename T>

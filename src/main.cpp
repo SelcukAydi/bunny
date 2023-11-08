@@ -39,6 +39,7 @@ struct StateData
     SOParams m_param_list[5];
     std::unordered_map<int, SOParams> m_map;
     std::unordered_map<int, std::unordered_map<int, int>> m_complex_map;
+    std::vector<SOParams> m_vector;
 
     template<typename Paper>
     void serialize(Paper& paper, std::string key = "")
@@ -49,6 +50,7 @@ struct StateData
         paper.save(m_param_list, key, 3);
         paper.save(m_map, key, 4);
         paper.save(m_complex_map, key, 5);
+        paper.save(m_vector, key, 6);
     }
 
     template<typename Paper>
@@ -60,6 +62,7 @@ struct StateData
         paper.load(m_param_list, key, 3, index);
         paper.load(m_map, key, 4, index);
         paper.load(m_complex_map, key, 5, index);
+        paper.load(m_vector, key, 6, index);
     }
 };
 
@@ -91,6 +94,9 @@ int main()
     state_data.m_param_list[4].m_lsc_hash = 139;
     state_data.m_param_list[4].m_param_name = "banner";
     state_data.m_param_list[4].m_arr[2] = 139;
+
+    state_data.m_vector.push_back(params1);
+    state_data.m_vector.push_back(params);
 
 
     state_data.serialize(opaper);
