@@ -23,5 +23,7 @@ TEST(ObjectTest, Simple)
     Person in_obj;
     in_obj.deserialize(ipaper);
 
+    std::cout << ss.str() << '\n';
+
     EXPECT_EQ(out_obj, in_obj);
 }
