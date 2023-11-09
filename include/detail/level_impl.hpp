@@ -2,6 +2,7 @@
 
 #include <type_traits>
 #include "level_enum.hpp"
+#include <string>
 
 namespace bunny::detail
 {

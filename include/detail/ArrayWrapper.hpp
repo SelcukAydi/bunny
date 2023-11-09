@@ -30,7 +30,7 @@ namespace bunny::detail
             auto count = 0;
             while(count < m_element_count)
             {
-                std::cout << "key:" << key << "serialize item " << count++ << '\n';
+                // std::cout << "key:" << key << "serialize item " << count++ << '\n';
             }
         }
 
