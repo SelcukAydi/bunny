@@ -1,62 +1,69 @@
 #pragma once
 
 #include <string>
+#include "FieldTag.hpp"
 
 namespace bunny::detail
 {
     class PrimitiveComposer
     {
         constexpr PrimitiveComposer() = default;
-        
-        protected:
-        template <typename Paper>
-        void compose(Paper &paper, char &data, std::string key, int id)
-        {
-            key.append(".");
-            key.append(std::to_string(id));
 
+    public:
+        template <typename Paper>
+        static void compose(Paper &paper, const char &data, std::string key, FieldTag ftag)
+        {
             paper.stream() << "\n";
             paper.stream() << key << " " << data;
         }
 
         template <typename Paper>
-        void compose(Paper &paper, signed char &data, std::string key, int id)
+        static void compose(Paper &paper, const signed char &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, unsigned char &data, std::string key, int id)
+        static void compose(Paper &paper, const unsigned char &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, unsigned short int &data, std::string key, int id)
+        static void compose(Paper &paper, const unsigned short int &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, signed short int &data, std::string key, int id)
+        static void compose(Paper &paper, const signed short int &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, signed int &data, std::string key, int id)
+        static void compose(Paper &paper, const signed int &data, std::string key, FieldTag ftag)
+        {
+            paper.stream() << "\n";
+            paper.stream() << key << " " << data;
+        }
+
+        template <typename Paper>
+        static void compose(Paper &paper, const unsigned int &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, unsigned int &data, std::string key, int id)
+        static void compose(Paper &paper, const long unsigned int &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, long unsigned int &data, std::string key, int id)
+        static void compose(Paper &paper, const long signed int &data, std::string key, FieldTag ftag)
         {
         }
 
         template <typename Paper>
-        void compose(Paper &paper, long signed int &data, std::string key, int id)
+        static void compose(Paper &paper, const std::string &data, std::string key, FieldTag ftag)
         {
+            paper.stream() << "\n";
+            paper.stream() << key << " " << data.size() << " " << data;
         }
     };
 }

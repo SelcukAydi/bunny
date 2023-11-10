@@ -10,7 +10,7 @@ namespace bunny::detail
 
         protected:
         template <typename Paper, typename T>
-        void compose(Paper &paper, T &data, std::string key, int id)
+        void compose(Paper &paper, T &data, std::string key, FieldTag ftag)
         {
         }
     };
