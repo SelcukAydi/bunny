@@ -16,7 +16,7 @@ namespace bunny
         // We can declare this as a friend function.
         //
         template <typename T>
-        void operator()(T &data, std::string &key, detail::FieldTag ftag)
+        void operator()(T &data, std::string &key, FieldTag ftag)
         {
             decompose(data, key, ftag);
         }

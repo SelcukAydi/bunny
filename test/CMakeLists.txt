@@ -12,8 +12,8 @@ file(GLOB SRC_FILES
 )
 
 
-include_directories(include)
+# include_directories(include)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES} pthread gtest_main)

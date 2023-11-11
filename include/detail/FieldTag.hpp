@@ -1,6 +1,6 @@
 #pragma once
 
-namespace bunny::detail
+namespace bunny
 {
     struct FieldTag
     {

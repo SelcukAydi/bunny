@@ -143,8 +143,17 @@ namespace bunny::detail
         {
             std::istringstream input_stream{input_data};
 
-            input_stream.get();
-            input_stream.get();
+            std::size_t size{};
+            // input_stream.get();
+            input_stream >> size;
+
+            if(size == 0)
+            {
+                return;
+            }
+
+            // TODO: We need to readsome within size.
+            //
             input_stream >> data;
 
             if (input_stream.fail())
