@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../FieldTag.hpp"
+#include ".detail/FieldTag.hpp"
 
 namespace bunny::detail
 {

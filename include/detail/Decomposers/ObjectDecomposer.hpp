@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../TypeTraits.hpp"
-#include "../FieldTag.hpp"
+#include "detail/TypeTraits.hpp"
+#include "detail/FieldTag.hpp"
 #include <string>
 
 namespace bunny::detail

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../level_impl.hpp"
-#include "../ArrayWrapper.hpp"
-#include "../FieldTag.hpp"
+#include "detail/level_impl.hpp"
+#include "detail/ArrayWrapper.hpp"
+#include "detail/FieldTag.hpp"
 
 namespace bunny::detail
 {

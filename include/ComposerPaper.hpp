@@ -2,7 +2,7 @@
 
 #include "detail/FieldTag.hpp"
 #include "detail/TypeTraits.hpp"
-#include "detail/ComposerPaperBase.hpp"
+#include "detail/Composers/ComposerPaperBase.hpp"
 
 namespace bunny
 {

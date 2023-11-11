@@ -5,7 +5,7 @@
 #include "ObjectComposer.hpp"
 #include "ArrayComposer.hpp"
 #include "PointerComposer.hpp"
-#include "FieldTag.hpp"
+#include "detail/FieldTag.hpp"
 #include <ostream>
 
 namespace bunny::detail

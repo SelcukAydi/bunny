@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "TypeTraits.hpp"
+#include "detail/TypeTraits.hpp"
 
 namespace bunny::detail
 {

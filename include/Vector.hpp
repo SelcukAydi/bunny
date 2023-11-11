@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detail/GlobalCompose.hpp"
+#include "detail/Composers/GlobalCompose.hpp"
 #include <vector>
 #include <iostream>
 #include <sstream>

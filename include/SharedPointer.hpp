@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detail/GlobalCompose.hpp"
+#include "detail/Composers/GlobalCompose.hpp"
 #include <memory>
 
 namespace bunny::detail

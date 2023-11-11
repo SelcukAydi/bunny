@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ArrayWrapper.hpp"
-#include "FieldTag.hpp"
+#include "detail/ArrayWrapper.hpp"
+#include "detail/FieldTag.hpp"
 #include <string>
 
 namespace bunny::detail

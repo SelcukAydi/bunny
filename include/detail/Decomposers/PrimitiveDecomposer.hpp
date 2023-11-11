@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../FieldTag.hpp"
+#include "detail/FieldTag.hpp"
 #include <sstream>
 #include <string>
 #include <iostream>
