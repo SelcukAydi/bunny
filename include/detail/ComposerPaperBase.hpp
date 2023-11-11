@@ -4,6 +4,7 @@
 #include "PrimitiveComposer.hpp"
 #include "ObjectComposer.hpp"
 #include "ArrayComposer.hpp"
+#include "PointerComposer.hpp"
 #include "FieldTag.hpp"
 #include <ostream>
 
@@ -76,6 +77,13 @@ namespace bunny::detail
         template <typename T>
         void composePointer(const T &data, std::string key, FieldTag ftag)
         {
+            if (ftag.valid())
+            {
+                key.append(".");
+                key.append(std::to_string(ftag.value()));
+            }
+
+            PointerComposer::compose(this->This(), data, key, ftag);
         }
 
         template <typename T>
