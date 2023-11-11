@@ -4,6 +4,7 @@
 #include "PrimitiveDecomposer.hpp"
 #include "ObjectDecomposer.hpp"
 #include "ArrayDecomposer.hpp"
+#include "PointerDecomposer.hpp"
 #include <istream>
 #include <vector>
 #include <unordered_map>
@@ -140,6 +141,13 @@ namespace bunny::detail
         template <typename T>
         void decomposePointer(T &data, std::string key, FieldTag ftag)
         {
+            if (ftag.valid())
+            {
+                key.append(".");
+                key.append(std::to_string(ftag.value()));
+            }
+
+            PointerDecomposer::decompose(this->This(), data, key, ftag);
         }
 
         template <typename T>
