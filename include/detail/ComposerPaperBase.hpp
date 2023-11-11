@@ -3,6 +3,7 @@
 #include "GlobalCompose.hpp"
 #include "PrimitiveComposer.hpp"
 #include "ObjectComposer.hpp"
+#include "ArrayComposer.hpp"
 #include "FieldTag.hpp"
 #include <ostream>
 
@@ -11,13 +12,6 @@ namespace bunny::detail
     template <typename Derived>
     class ComposerPaperBase
     {
-        // References to the base classes of composers.
-        // Primitive composer
-        // Object composer
-        // Array composer
-        // Enum composer
-        // Pointer composer
-
     public:
         using Stream = std::ostream;
 
@@ -25,7 +19,6 @@ namespace bunny::detail
 
         explicit constexpr ComposerPaperBase(Stream &stream) : m_stream(stream)
         {
-            m_stream << "bunny";
         }
 
         Stream &stream() noexcept
@@ -69,8 +62,15 @@ namespace bunny::detail
         }
 
         template <typename T>
-        void composeArray(const T &data, std::string key, FieldTag ftag)
+        void composeArray(const ArrayWrapper<T> &data, std::string key, FieldTag ftag)
         {
+            if (ftag.valid())
+            {
+                key.append(".");
+                key.append(std::to_string(ftag.value()));
+            }
+
+            ArrayComposer::compose(this->This(), data, key, ftag);
         }
 
         template <typename T>

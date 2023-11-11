@@ -28,9 +28,13 @@ namespace bunny
     template <typename T>
     ComposerPaper &operator<<(ComposerPaper &paper, const T &data)
     {
+        //TODO: this tag must start with a new line.
+        //
+        paper.stream() << "bunny";
+
         if constexpr (detail::TypeHasSerializeMethod<std::remove_cv_t<T>, std::remove_cv_t<ComposerPaper>>::value)
         {
-            (static_cast<std::remove_const_t<T>>(data)).serialize(paper);
+            (const_cast<std::remove_const_t<T>&>(data)).serialize(paper);
         }
         else
         {

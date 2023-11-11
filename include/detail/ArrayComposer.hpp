@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ArrayWrapper.hpp"
+#include "FieldTag.hpp"
 #include <string>
 
 namespace bunny::detail
@@ -9,10 +10,24 @@ namespace bunny::detail
     {
         constexpr ArrayComposer() = default;
 
-        protected:
+    public:
         template <typename Paper, typename T>
-        void compose(Paper &paper, ArrayWrapper<T> &data, std::string key, int id)
+        static void compose(Paper &paper, const ArrayWrapper<T> &data, std::string key, FieldTag ftag)
         {
+            key.append(".a");
+
+            paper.stream() << "\n";
+            paper.stream() << key << " " << data.count();
+
+            std::size_t count = 0;
+            T *ptr = data.address();
+
+            while (count < data.count())
+            {
+                std::string tmp_key{key};
+                tmp_key.append(".item.").append(std::to_string(count));
+                paper(*(ptr + count++), tmp_key, FieldTag{});
+            }
         }
     };
 }

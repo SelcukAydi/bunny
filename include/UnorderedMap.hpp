@@ -2,6 +2,8 @@
 
 #include "detail/GlobalCompose.hpp"
 #include <unordered_map>
+#include <iostream>
+#include <sstream>
 
 namespace bunny::detail
 {
@@ -28,6 +30,43 @@ namespace bunny::detail
             paper(itr->second, tmp_val, FieldTag{});
         }
     }
+
+    template <typename Paper, typename Key, typename Val>
+    void deserialize_impl(Paper &paper, std::unordered_map<Key, Val> &data, std::string key = "")
+    {
+        key.append(".um");
+
+        auto& parsed_data = paper.parsedData();
+
+        auto itr = parsed_data.find(key);
+
+        if (itr == parsed_data.end())
+        {
+            std::cerr << "Could not find the key: " << key << '\n';
+            return;
+        }
+
+        std::istringstream input_stream{itr->second};
+        std::size_t size;
+        input_stream >> size;
+
+        for (std::size_t i = 0; i < size; ++i)
+        {
+            Key entry_key{};
+            Val entry_data{};
+
+            std::string tmp_key{key};
+            tmp_key.append(".key.").append(std::to_string(i));
+
+            std::string tmp_val{key};
+            tmp_val.append(".val.").append(std::to_string(i));
+
+            paper(entry_key, tmp_key, FieldTag{});
+            paper(entry_data, tmp_val, FieldTag{});
+
+            data[entry_key] = entry_data;
+        }
+    }
 }
 
 namespace bunny
@@ -36,5 +75,11 @@ namespace bunny
     void serialize(Paper &paper, const std::unordered_map<Key, Val> &data, std::string key = "")
     {
         detail::serialize_impl(paper, data, key);
+    }
+
+    template <typename Paper, typename Key, typename Val>
+    void deserialize(Paper &paper, std::unordered_map<Key, Val> &data, std::string key = "")
+    {
+        detail::deserialize_impl(paper, data, key);
     }
 }
