@@ -5,3 +5,4 @@
 3) Primitive types may belong to any container or complex types.
 4) Foldering structure must be done.
 5) If any key does exist when composing it then throw an exception.
+6) Loop prevention must be added.
