@@ -160,7 +160,7 @@ int main()
     bunny::DecomposerPaper decomposer{ss};
     ComplexTestClass in_obj;
     decomposer >> in_obj;
-
-	return 0;
+   
+    return 0;
 }
 ```
