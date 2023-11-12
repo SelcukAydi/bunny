@@ -1,14 +1,15 @@
 # Bunny Serialization Library
-Bunny is a header only, fast and easy-use seriliazation library that supports field taggin hence backward compatibility is totally supported in a compile-time safe manner. Bunny has a boost-like code style and its usage is very similar to boost serialization library. Most of the features provided in boost are implemented in Bunny with a modern approach and design.
+Bunny is a header-only, fast, and easy-use serialization library that supports field tagging hence backward compatibility is totally supported in a compile-time safe manner. Bunny has a boost-like code style and its usage is very similar to boost serialization library. Most of the features provided in Boost are implemented in Bunny with a modern approach and design.
 
 ## Current Features and TODOs
 1. Bunny does not prevent loops in the serialization chain. This will be implemented in the next releases.
 2. Object tracking feature is not implemented.
 3. Virtual inheritance is not supported in the current version. We have a plan to provide this unique ability soon.
-4. Not all containers and types are supported in the standart library. However, almost all of them will be supported in the upcoming releases.
+4. Not all containers and types are supported in the standard library. However, almost all of them will be supported in the upcoming releases.
+5. Strong compile-time metaprogramming checks for reserved IDs and type safety will be added in the next release.
 
 ### Supported Types
-Bunny currently or will support the below list. In addition to that, all the user-defined class types are supported as ususal.
+Bunny currently or will support the below list. In addition to that, all the user-defined class types are supported as usual.
 #### Primitive Types
 - char
 - signed char
