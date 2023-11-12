@@ -1,9 +1,3 @@
-**Table of Contents**
-
-[TOCM]
-
-[TOC]
-
 # Bunny Serialization Library
 Bunny is a header only, fast and easy-use seriliazation library that supports field taggin hence backward compatibility is totally supported in a compile-time safe manner. Bunny has a boost-like code style and its usage is very similar to boost serialization library. Most of the features provided in boost are implemented in Bunny with a modern approach and design.
 
