@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WARNING_FLAGS} -std=c++17")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
 find_package(GTest REQUIRED)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
