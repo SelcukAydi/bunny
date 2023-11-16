@@ -24,6 +24,7 @@ namespace bunny::detail
         Stream &m_stream;
         std::size_t m_index{};
         ParsedData m_data;
+        std::string m_current_key{};
 
     public:
         explicit constexpr DecomposerPaperBase(Stream &stream) : m_stream(stream)
@@ -48,6 +49,16 @@ namespace bunny::detail
         std::size_t index() const noexcept
         {
             return m_index;
+        }
+
+        inline std::string getCurrentKey() const noexcept
+        {
+            return m_current_key;
+        }
+
+        inline std::string setCurrentKey(std::string& key) noexcept
+        {
+            return m_current_key = key;
         }
 
         void parse()
@@ -89,7 +100,7 @@ namespace bunny::detail
         }
 
         template <typename T>
-        void decompose(T &data, std::string &key, FieldTag ftag)
+        void decompose(T &data, std::string key, FieldTag ftag)
         {
             GlobalDecompose<T, typename ImplementationLevel<std::remove_reference_t<T>>::type>::invoke(this->This(), data, key, ftag);
         }

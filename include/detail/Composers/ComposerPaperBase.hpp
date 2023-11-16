@@ -17,6 +17,7 @@ namespace bunny::detail
         using Stream = std::ostream;
 
         Stream &m_stream;
+        std::string m_current_key{};
 
         explicit constexpr ComposerPaperBase(Stream &stream) : m_stream(stream)
         {
@@ -32,8 +33,23 @@ namespace bunny::detail
             return static_cast<Derived &>(*this);
         }
 
+        inline std::string getCurrentKey() noexcept
+        {
+            return m_current_key;
+        }
+
+        inline std::string setCurrentKey(std::string& key) noexcept
+        {
+            return m_current_key = key;
+        }
+
+        inline void resetCurrentKey() noexcept
+        {
+            m_current_key.clear();
+        }
+
         template <typename T>
-        void compose(const T &data, std::string &key, FieldTag ftag)
+        void compose(const T &data, std::string key, FieldTag ftag)
         {
             GlobalCompose<T, typename ImplementationLevel<std::remove_reference_t<T>>::type>::invoke(this->This(), data, key, ftag);
         }

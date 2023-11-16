@@ -13,6 +13,16 @@ namespace bunny
         {
         }
 
+        // This overload is for clients of this library.
+        //
+        template <typename T>
+        void operator()(const T &data, FieldTag ftag)
+        {
+            std::string tmp{getCurrentKey()};
+            compose(data, getCurrentKey(), ftag);
+            setCurrentKey(tmp);
+        }
+
         // We can declare this as a friend function.
         //
         template <typename T>
@@ -28,13 +38,13 @@ namespace bunny
     template <typename T>
     ComposerPaper &operator<<(ComposerPaper &paper, const T &data)
     {
-        //TODO: this tag must start with a new line.
+        // TODO: this tag must start with a new line.
         //
         paper.stream() << "bunny";
 
         if constexpr (detail::TypeHasSerializeMethod<std::remove_cv_t<T>, std::remove_cv_t<ComposerPaper>>::value)
         {
-            (const_cast<std::remove_const_t<T>&>(data)).serialize(paper);
+            (const_cast<std::remove_const_t<T> &>(data)).serialize(paper);
         }
         else
         {

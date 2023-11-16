@@ -12,17 +12,17 @@ struct ListTestPerson
     std::string m_name{};
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_id, key, FieldTag{1});
-        paper(m_name, key, FieldTag{2});
+        paper(m_id, FieldTag{1});
+        paper(m_name, FieldTag{2});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_id, key, FieldTag{1});
-        paper(m_name, key, FieldTag{2});
+        paper(m_id, FieldTag{1});
+        paper(m_name, FieldTag{2});
     }
 
     friend bool operator==(const ListTestPerson &lhs, const ListTestPerson &rhs);
@@ -40,17 +40,17 @@ struct ListTestManager
     std::list<ListTestPerson*> m_person_list_raw_pointer;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_person_list, key, FieldTag{1});
-        paper(m_person_list_raw_pointer, key, FieldTag{2});
+        paper(m_person_list, FieldTag{1});
+        paper(m_person_list_raw_pointer, FieldTag{2});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_person_list, key, FieldTag{1});
-        paper(m_person_list_raw_pointer, key, FieldTag{2});
+        paper(m_person_list, FieldTag{1});
+        paper(m_person_list_raw_pointer, FieldTag{2});
     }
 
     friend bool operator==(const ListTestManager &lhs, const ListTestManager &rhs);

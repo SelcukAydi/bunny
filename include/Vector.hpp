@@ -8,8 +8,11 @@
 namespace bunny::detail
 {
     template <typename Paper, typename T>
-    void serialize_impl(Paper &paper, const std::vector<T> &data, std::string key = "")
+    void serialize_impl(Paper &paper, const std::vector<T> &data)
     {
+        std::string key = paper.getCurrentKey();
+        key.append(".vtr");
+
         paper.stream() << "\n";
         paper.stream() << key << " " << data.size();
 
@@ -22,8 +25,11 @@ namespace bunny::detail
     }
 
     template <typename Paper, typename T>
-    void deserialize_impl(Paper &paper, std::vector<T> &data, std::string key = "")
+    void deserialize_impl(Paper &paper, std::vector<T> &data)
     {
+        std::string key = paper.getCurrentKey();
+        key.append(".vtr");
+
         auto& parsed_data = paper.parsedData();
         auto itr = parsed_data.find(key);
 
@@ -52,14 +58,14 @@ namespace bunny::detail
 namespace bunny
 {
     template <typename Paper, typename T>
-    void serialize(Paper &paper, const std::vector<T> &data, std::string key = "")
+    void serialize(Paper &paper, const std::vector<T> &data)
     {
-        detail::serialize_impl(paper, data, key);
+        detail::serialize_impl(paper, data);
     }
 
     template <typename Paper, typename T>
-    void deserialize(Paper &paper, std::vector<T> &data, std::string key = "")
+    void deserialize(Paper &paper, std::vector<T> &data)
     {
-        detail::deserialize_impl(paper, data, key);
+        detail::deserialize_impl(paper, data);
     }
 }

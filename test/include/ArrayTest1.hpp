@@ -11,15 +11,15 @@ struct SimpleTestClass
     int m_arr[5]{1, 2, 3, 4, 5};
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{9090});
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{9090});
+        paper(m_arr, FieldTag{9090});
     }
 
     bool operator==(const SimpleTestClass &other) const &
@@ -50,15 +50,15 @@ struct KeyIgnoreTestClass
     int m_arr[5]{1, 2, 3, 4, 5};
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{9090});
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{1231});
+        paper(m_arr, FieldTag{1231});
     }
 
     bool operator==(const KeyIgnoreTestClass &other) const &
@@ -82,15 +82,15 @@ struct CascadeArrayTestClass
     SimpleTestClass m_class_list[10];
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_class_list, key, FieldTag{9090});
+        paper(m_class_list, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_class_list, key, FieldTag{9090});
+        paper(m_class_list, FieldTag{9090});
     }
 
     bool operator==(const CascadeArrayTestClass &other) const &
@@ -114,15 +114,15 @@ struct SimpleStringTestClass
     std::string m_arr[5];
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{9090});
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_arr, key, FieldTag{9090});
+        paper(m_arr, FieldTag{9090});
     }
 
     bool operator==(const SimpleStringTestClass &other) const &

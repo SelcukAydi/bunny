@@ -12,15 +12,15 @@ struct SimpleUnorderedTestClass
     std::unordered_map<int, std::string> m_map;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_map, key, FieldTag{1});
+        paper(m_map, FieldTag{1});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_map, key, FieldTag{1});
+        paper(m_map, FieldTag{1});
     }
 
     bool operator==(const SimpleUnorderedTestClass& other) const&
@@ -58,15 +58,15 @@ struct CascadedUnorderedTestClass
     std::unordered_map<int, SimpleUnorderedTestClass> m_map;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper(m_map, key, FieldTag{1});
+        paper(m_map, FieldTag{1});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "")
+    void deserialize(Paper &paper)
     {
-        paper(m_map, key, FieldTag{1});
+        paper(m_map, FieldTag{1});
     }
 
     bool operator==(const CascadedUnorderedTestClass& other) const&

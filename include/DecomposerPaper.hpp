@@ -13,6 +13,16 @@ namespace bunny
         {
         }
 
+        // This overload is for clients of this library.
+        //
+        template <typename T>
+        void operator()(T &data, FieldTag ftag)
+        {
+            std::string tmp{getCurrentKey()};
+            decompose(data, getCurrentKey(), ftag);
+            setCurrentKey(tmp);
+        }
+
         // We can declare this as a friend function.
         //
         template <typename T>

@@ -17,6 +17,8 @@ namespace bunny::detail
 
             auto &parsed_data = paper.parsedData();
 
+            key.append(".ptr");
+
             auto itr = parsed_data.find(key);
 
             if (itr == parsed_data.end())
@@ -35,6 +37,8 @@ namespace bunny::detail
                 data = nullptr;
                 return;
             }
+
+            key.append(".item");
 
             data = new ObjectType{};
             paper(*data, key, FieldTag{});

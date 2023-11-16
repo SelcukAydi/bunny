@@ -14,13 +14,15 @@ namespace bunny::detail
         template <typename Paper, typename T>
         static void decompose(Paper &paper, T &data, std::string key, FieldTag ftag)
         {
+            paper.setCurrentKey(key);
+
             if constexpr (TypeHasDeserializeMethod<std::remove_cv_t<T>, std::remove_cv_t<Paper>>::value)
             {
-                (static_cast<std::remove_const_t<T>&>(data)).deserialize(paper, key);
+                (static_cast<std::remove_const_t<T>&>(data)).deserialize(paper);
             }
             else
             {
-                deserialize(paper, const_cast<std::remove_const_t<T>&>(data), key);
+                deserialize(paper, const_cast<std::remove_const_t<T>&>(data));
             }
         }
     };
