@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package benchmarktesting;
+
+message Person
+{
+    optional string name = 1;
+    optional int32 id = 2;
+
+    message Role
+    {
+        optional string roleName = 1;
+    }
+
+    repeated Role roles = 3;
+}

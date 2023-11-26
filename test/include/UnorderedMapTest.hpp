@@ -1,22 +1,26 @@
 #pragma once
 
+#include "ComposerPaper.hpp"
+#include "DecomposerPaper.hpp"
 #include <unordered_map>
 #include <string>
+
+using bunny::FieldTag;
 
 struct SimpleUnorderedTestClass
 {
     std::unordered_map<int, std::string> m_map;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_map, key, 1);
+        paper(m_map, FieldTag{1});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_map, key, 1, index);
+        paper(m_map, FieldTag{1});
     }
 
     bool operator==(const SimpleUnorderedTestClass& other) const&
@@ -54,15 +58,15 @@ struct CascadedUnorderedTestClass
     std::unordered_map<int, SimpleUnorderedTestClass> m_map;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_map, key, 1);
+        paper(m_map, FieldTag{1});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_map, key, 1, index);
+        paper(m_map, FieldTag{1});
     }
 
     bool operator==(const CascadedUnorderedTestClass& other) const&

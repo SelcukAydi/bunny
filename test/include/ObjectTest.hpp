@@ -1,7 +1,11 @@
 #pragma once
 
+#include "ComposerPaper.hpp"
+#include "DecomposerPaper.hpp"
 #include <cstdint>
 #include <string>
+
+using bunny::FieldTag;
 
 struct Manager
 {
@@ -9,17 +13,17 @@ struct Manager
     std::string m_department;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_id, key, 1);
-        paper.save(m_department, key, 2);
+        paper(m_id, FieldTag{1});
+        paper(m_department, FieldTag{2});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_id, key, 1, index);
-        paper.load(m_department, key, 2, index);
+        paper(m_id, FieldTag{1});
+        paper(m_department, FieldTag{2});
     }
 
     bool operator==(const Manager& other) const&
@@ -35,19 +39,19 @@ struct Person
     Manager m_manager;
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_id, key, 1);
-        paper.save(m_name, key, 2);
-        paper.save(m_manager, key, 3);
+        paper(m_id, FieldTag{1});
+        paper(m_name, FieldTag{2});
+        paper(m_manager, FieldTag{3});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_id, key, 1, index);
-        paper.load(m_name, key, 2, index);
-        paper.load(m_manager, key, 3, index);
+        paper(m_id, FieldTag{1});
+        paper(m_name, FieldTag{2});
+        paper(m_manager, FieldTag{3});
     }
 
     bool operator==(const Person& other) const&

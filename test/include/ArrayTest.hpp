@@ -1,21 +1,25 @@
 #pragma once
 
+#include "ComposerPaper.hpp"
+#include "DecomposerPaper.hpp"
 #include <string>
+
+using bunny::FieldTag;
 
 struct SimpleTestClass
 {
     int m_arr[5]{1, 2, 3, 4, 5};
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_arr, key, 9090);
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_arr, key, 9090, index);
+        paper(m_arr, FieldTag{9090});
     }
 
     bool operator==(const SimpleTestClass &other) const &
@@ -46,15 +50,15 @@ struct KeyIgnoreTestClass
     int m_arr[5]{1, 2, 3, 4, 5};
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_arr, key, 9090);
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_arr, key, 1231, index);
+        paper(m_arr, FieldTag{1231});
     }
 
     bool operator==(const KeyIgnoreTestClass &other) const &
@@ -78,15 +82,15 @@ struct CascadeArrayTestClass
     SimpleTestClass m_class_list[10];
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_class_list, key, 9090);
+        paper(m_class_list, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_class_list, key, 9090, index);
+        paper(m_class_list, FieldTag{9090});
     }
 
     bool operator==(const CascadeArrayTestClass &other) const &
@@ -110,15 +114,15 @@ struct SimpleStringTestClass
     std::string m_arr[5];
 
     template <typename Paper>
-    void serialize(Paper &paper, std::string key = "")
+    void serialize(Paper &paper)
     {
-        paper.save(m_arr, key, 9090);
+        paper(m_arr, FieldTag{9090});
     }
 
     template <typename Paper>
-    void deserialize(Paper &paper, std::string key = "", std::size_t index = 0)
+    void deserialize(Paper &paper)
     {
-        paper.load(m_arr, key, 9090, index);
+        paper(m_arr, FieldTag{9090});
     }
 
     bool operator==(const SimpleStringTestClass &other) const &

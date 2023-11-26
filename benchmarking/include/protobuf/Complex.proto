@@ -1,0 +1,34 @@
+syntax = "proto2";
+
+package complexbenchmarking;
+
+message ComplexClass
+{
+    optional int32 id = 1;
+    optional int32 count = 2;
+    optional string name = 3;
+
+    message PlainClass
+    {
+        optional string name = 1;
+        map<int32, string> my_map = 2;
+    }
+
+    message InnerIntMap
+    {
+        map<int32, int32> m_map = 1;
+    }
+    
+    message InnerPlainClassMap
+    {
+        map<int32, PlainClass> my_map = 1;
+    }
+
+    message InnerPlainClassMapArray
+    {
+        optional InnerPlainClassMap my_maps = 1;
+    }
+    
+    map<int32, InnerIntMap> int_map = 4;
+    repeated InnerPlainClassMapArray plain_class_map = 5;
+}
