@@ -8,13 +8,12 @@ SET(WARNING_FLAGS "-Wno-unused-variable -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WARNING_FLAGS} -std=c++17")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_INSTALL_PREFIX "/usr/local/lib/")
+if(${CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT})
+     set(CMAKE_INSTALL_PREFIX "/usr/local/lib/")
+endif()
 
-# This is a local setting and needs to be removed.
-list(APPEND CMAKE_PREFIX_PATH "/usr/local/lib/boost/lib/cmake/" "/usr/local/lib/protobuf/lib/cmake/")
-
-option(ENABLE_BUNNY_TEST "Enables the bunny test cases." OFF)
-option(ENABLE_BUNNY_BENCHMARKING "Enables the benchmarking test cases." OFF)
+option(ENABLE_BUNNY_TEST "Enables the bunny test cases. Requires Gtest." OFF)
+option(ENABLE_BUNNY_BENCHMARKING "Enables the benchmarking test cases. Requires Boost, absl, utf8_range and Protobuf." ON)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
